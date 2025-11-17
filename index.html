@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Fire Safety Training</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <!-- Advanced Libraries for 3D and Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+</head>
+<body>
+    <!-- Skip Links for Accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <a href="#nav-icons" class="skip-link">Skip to navigation</a>
+
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+        <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="Training progress">
+            <div id="progress" class="progress-fill"></div>
+        </div>
+        <div class="nav-icons" id="nav-icons">
+            <button class="nav-btn" id="nav-intro" onclick="jumpToSection('intro')" aria-label="Go to Introduction section">
+                <i class="fas fa-fire" aria-hidden="true"></i>
+            </button>
+            <button class="nav-btn" id="nav-instructions" onclick="jumpToSection('instructions')" aria-label="Go to Instructions section">
+                <i class="fas fa-book" aria-hidden="true"></i>
+            </button>
+            <button class="nav-btn" id="nav-quiz" onclick="jumpToSection('quiz')" aria-label="Go to Quiz section">
+                <i class="fas fa-question-circle" aria-hidden="true"></i>
+            </button>
+            <button class="nav-btn" id="nav-certificate" onclick="jumpToSection('certificate')" aria-label="Go to Certificate section">
+                <i class="fas fa-certificate" aria-hidden="true"></i>
+            </button>
+            <button class="contrast-toggle" id="contrast-toggle" onclick="toggleHighContrast()" aria-label="Toggle high contrast mode">
+                <i class="fas fa-adjust" aria-hidden="true"></i>
+            </button>
+        </div>
+    </nav>
+
+    <main id="main-content">
+        <div id="container">
+            <!-- Introduction Section -->
+            <section id="intro" class="section active" role="main" aria-labelledby="intro-heading">
+                <div class="content">
+                <div class="hero">
+                        <h1 id="intro-heading" class="morphing-title">Advanced Fire Safety Training</h1>
+                        <p class="hero-subtitle">Master essential fire safety skills with interactive multimedia and real-time simulations.</p>
+
+                        <!-- Real-time Data Visualization -->
+                        <div class="live-stats" role="region" aria-label="Live training statistics">
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <div class="stat-number" id="trained-count">0</div>
+                                    <div class="stat-label">Trained This Month</div>
+                                    <div class="stat-trend" id="trained-trend">
+                                        <i class="fas fa-arrow-up"></i> +12% from last month
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <div class="stat-number">15</div>
+                                    <div class="stat-label">Min Course</div>
+                                    <div class="stat-trend">
+                                        <i class="fas fa-star"></i> Highly Rated
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-trophy"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <div class="stat-number" id="certified-count">0</div>
+                                    <div class="stat-label">Certified Today</div>
+                                    <div class="stat-trend" id="certified-trend">
+                                        <i class="fas fa-fire"></i> Fire Safety Experts
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Interactive 3D Fire Visualization -->
+                        <div class="fire-visualization" id="fire-3d-container">
+                            <canvas id="fire-canvas"></canvas>
+                            <div class="fire-controls">
+                                <button class="control-btn" onclick="toggleFireParticles()" aria-label="Toggle fire particles">
+                                    <i class="fas fa-fire"></i>
+                                </button>
+                                <button class="control-btn" onclick="changeFireColor()" aria-label="Change fire color">
+                                    <i class="fas fa-palette"></i>
+                                </button>
+                                <button class="control-btn" onclick="resetFireView()" aria-label="Reset fire view">
+                                    <i class="fas fa-sync"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <button class="btn advanced-btn" onclick="nextSection('instructions')" aria-describedby="start-training-desc">
+                            <span class="btn-text">Begin Advanced Training</span>
+                            <div class="btn-particles"></div>
+                        </button>
+                        <div id="start-training-desc" class="sr-only">Begin the interactive fire safety training course</div>
+                    </div>
+                <!-- Advanced Data Visualization Dashboard -->
+                <div class="data-dashboard">
+                    <div class="dashboard-header">
+                        <h3>Live Fire Safety Analytics</h3>
+                        <div class="dashboard-controls">
+                            <button class="dashboard-btn active" onclick="showChart('incidents')" aria-label="Show fire incidents chart">
+                                <i class="fas fa-chart-line"></i> Incidents
+                            </button>
+                            <button class="dashboard-btn" onclick="showChart('response')" aria-label="Show response times chart">
+                                <i class="fas fa-clock"></i> Response
+                            </button>
+                            <button class="dashboard-btn" onclick="showChart('training')" aria-label="Show training completion chart">
+                                <i class="fas fa-graduation-cap"></i> Training
+                            </button>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="analytics-chart"></canvas>
+                    </div>
+                    <div class="chart-legend">
+                        <div class="legend-item">
+                            <div class="legend-color incidents"></div>
+                            <span>Fire Incidents</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color response"></div>
+                            <span>Response Time</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color training"></div>
+                            <span>Training Completion</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Enhanced Simulation Preview with Multimedia -->
+                <div class="advanced-simulation-preview">
+                    <div class="sim-card interactive-card" onclick="playSimulationVideo('interactive')" aria-label="Play interactive simulation video">
+                        <div class="card-media">
+                            <video class="sim-video" poster="https://via.placeholder.com/300x200/ff6b6b/ffffff?text=Interactive+Simulation" muted>
+                                <source src="" type="video/mp4">
+                            </video>
+                            <div class="play-overlay">
+                                <i class="fas fa-play-circle"></i>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <h3>Interactive Simulation</h3>
+                            <p>Experience realistic fire scenarios with VR support</p>
+                            <div class="card-features">
+                                <span class="feature-tag vr">VR Ready</span>
+                                <span class="feature-tag interactive">Interactive</span>
+                            </div>
+                        </div>
+                        <div class="sim-flame advanced-flame"></div>
+                    </div>
+                    <div class="sim-card interactive-card" onclick="playSimulationVideo('feedback')" aria-label="Play real-time feedback video">
+                        <div class="card-media">
+                            <video class="sim-video" poster="https://via.placeholder.com/300x200/4ecdc4/ffffff?text=Real-time+Feedback" muted>
+                                <source src="" type="video/mp4">
+                            </video>
+                            <div class="play-overlay">
+                                <i class="fas fa-play-circle"></i>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <h3>AI-Powered Feedback</h3>
+                            <p>Get instant results and personalized tips</p>
+                            <div class="card-features">
+                                <span class="feature-tag ai">AI Analysis</span>
+                                <span class="feature-tag realtime">Real-time</span>
+                            </div>
+                        </div>
+                        <div class="sim-feedback advanced-feedback"></div>
+                    </div>
+                    <div class="sim-card interactive-card" onclick="playSimulationVideo('expert')" aria-label="Play expert guidance video">
+                        <div class="card-media">
+                            <video class="sim-video" poster="https://via.placeholder.com/300x200/45b7d1/ffffff?text=Expert+Guidance" muted>
+                                <source src="" type="video/mp4">
+                            </video>
+                            <div class="play-overlay">
+                                <i class="fas fa-play-circle"></i>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <h3>Expert Guidance</h3>
+                            <p>Learn from certified firefighters and instructors</p>
+                            <div class="card-features">
+                                <span class="feature-tag certified">Certified</span>
+                                <span class="feature-tag expert">Expert</span>
+                            </div>
+                        </div>
+                        <div class="sim-expert advanced-expert"></div>
+                    </div>
+                </div>
+
+                <!-- Ambient Audio Controls -->
+                <div class="audio-controls">
+                    <button class="audio-btn" onclick="toggleAmbientSound()" id="ambient-toggle" aria-label="Toggle ambient fire sounds">
+                        <i class="fas fa-volume-mute"></i>
+                        <span>Ambient Sounds</span>
+                    </button>
+                    <input type="range" class="volume-slider" id="volume-slider" min="0" max="1" step="0.1" value="0.3" aria-label="Ambient sound volume">
+                </div>
+                </div>
+                <div class="parallax-bg" aria-hidden="true"></div>
+                <div class="floating-particles" aria-hidden="true"></div>
+            </section>
+
+        <!-- Instructions Section -->
+        <section id="instructions" class="section" role="main" aria-labelledby="instructions-heading">
+            <div class="content">
+                <h2 id="instructions-heading" class="animate__animated animate__fadeInLeft">Interactive Instructions</h2>
+                <p class="animate__animated animate__fadeInRight animate__delay-1s">Engage with multimedia content and learn through interactive scenarios.</p>
+                <div class="scenario-selector animate__animated animate__slideInUp animate__delay-2s" role="region" aria-label="Learning scenario selection">
+                    <h3>Choose Your Learning Scenario</h3>
+                    <div class="scenarios">
+                        <button class="scenario-card" onclick="selectScenario('home')" aria-describedby="home-desc">
+                            <i class="fas fa-home" aria-hidden="true"></i>
+                            <h4>Home Fire</h4>
+                            <p id="home-desc">Learn kitchen and living room safety</p>
+                        </button>
+                        <button class="scenario-card" onclick="selectScenario('office')" aria-describedby="office-desc">
+                            <i class="fas fa-building" aria-hidden="true"></i>
+                            <h4>Office Fire</h4>
+                            <p id="office-desc">Master workplace emergency procedures</p>
+                        </button>
+                        <button class="scenario-card" onclick="selectScenario('outdoor')" aria-describedby="outdoor-desc">
+                            <i class="fas fa-tree" aria-hidden="true"></i>
+                            <h4>Outdoor Fire</h4>
+                            <p id="outdoor-desc">Handle camping and wildfire situations</p>
+                        </button>
+                    </div>
+                </div>
+                <div class="detailed-instructions">
+                    <div class="instruction-steps">
+                        <button class="step" id="step1" onclick="showStep(1)" aria-describedby="step1-desc">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h4>Understanding Fire Safety Signs</h4>
+                                <p id="step1-desc">Learn to recognize all safety signs and symbols</p>
+                            </div>
+                            <div class="step-badge" id="badge1" style="display: none;">
+                                <i class="fas fa-play-circle"></i> Video Available
+                            </div>
+                        </button>
+                        <button class="step" id="step2" onclick="showStep(2)" aria-describedby="step2-desc">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h4>Locating Fire Extinguishers</h4>
+                                <p id="step2-desc">Find and identify different types of extinguishers</p>
+                            </div>
+                            <div class="step-badge" id="badge2" style="display: none;">
+                                <i class="fas fa-play-circle"></i> Video Available
+                            </div>
+                        </button>
+                        <button class="step" id="step3" onclick="showStep(3)" aria-describedby="step3-desc">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h4>Finding Fire Exits</h4>
+                                <p id="step3-desc">Locate emergency exits and evacuation routes</p>
+                            </div>
+                            <div class="step-badge" id="badge3" style="display: none;">
+                                <i class="fas fa-play-circle"></i> Video Available
+                            </div>
+                        </button>
+                        <button class="step" id="step4" onclick="showStep(4)" aria-describedby="step4-desc">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h4>Emergency Procedures</h4>
+                                <p id="step4-desc">What to do in case of fire</p>
+                            </div>
+                            <div class="step-badge" id="badge4" style="display: none;">
+                                <i class="fas fa-play-circle"></i> Video Available
+                            </div>
+                        </button>
+                        <button class="step" id="step5" onclick="showStep(5)" aria-describedby="step5-desc">
+                            <div class="step-number">5</div>
+                            <div class="step-content">
+                                <h4>Prevention and Preparation</h4>
+                                <p id="step5-desc">Prevent fires and stay prepared</p>
+                            </div>
+                            <div class="step-badge" id="badge5" style="display: none;">
+                                <i class="fas fa-play-circle"></i> Video Available
+                            </div>
+                        </button>
+                    </div>
+                    <div class="avatar-section animate__animated animate__slideInUp animate__delay-3s">
+                        <div class="avatar" onclick="triggerAvatarAction()">
+                            <!-- SCBA Breathing Apparatus -->
+                            <div class="scba">
+                                <div class="scba-tank">
+                                    <div class="tank-gauge"></div>
+                                    <div class="tank-valve"></div>
+                                </div>
+                                <div class="scba-hose"></div>
+                                <div class="scba-mask">
+                                    <div class="mask-visor">
+                                        <div class="visor-reflection"></div>
+                                    </div>
+                                    <div class="mask-strap"></div>
+                                </div>
+                            </div>
+
+                            <!-- Helmet -->
+                            <div class="helmet">
+                                <div class="helmet-shell">
+                                    <div class="helmet-shine"></div>
+                                    <div class="helmet-stripe"></div>
+                                </div>
+                                <div class="visor">
+                                    <div class="visor-tint"></div>
+                                </div>
+                                <div class="helmet-radio">
+                                    <div class="radio-light"></div>
+                                </div>
+                            </div>
+
+                            <!-- Jacket -->
+                            <div class="jacket">
+                                <div class="jacket-body">
+                                    <div class="collar"></div>
+                                    <div class="badge">
+                                        <div class="badge-star"></div>
+                                    </div>
+                                    <div class="zipper"></div>
+                                    <div class="patches">
+                                        <div class="patch fire-dept">
+                                            <span>FD</span>
+                                        </div>
+                                        <div class="patch rank">
+                                            <span>CAPT</span>
+                                        </div>
+                                    </div>
+                                    <div class="jacket-pockets">
+                                        <div class="pocket left-pocket"></div>
+                                        <div class="pocket right-pocket"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Pants -->
+                            <div class="pants">
+                                <div class="belt">
+                                    <div class="belt-buckle"></div>
+                                </div>
+                                <div class="suspenders"></div>
+                                <div class="cargo-pockets">
+                                    <div class="cargo-pocket left-cargo"></div>
+                                    <div class="cargo-pocket right-cargo"></div>
+                                </div>
+                            </div>
+
+                            <!-- Boots -->
+                            <div class="boots">
+                                <div class="boot left-boot">
+                                    <div class="boot-laces"></div>
+                                    <div class="boot-sole"></div>
+                                </div>
+                                <div class="boot right-boot">
+                                    <div class="boot-laces"></div>
+                                    <div class="boot-sole"></div>
+                                </div>
+                            </div>
+
+                            <!-- Gloves -->
+                            <div class="gloves">
+                                <div class="glove left-glove">
+                                    <div class="glove-fingers"></div>
+                                </div>
+                                <div class="glove right-glove">
+                                    <div class="glove-fingers"></div>
+                                </div>
+                            </div>
+
+                            <!-- Tools -->
+                            <div class="flashlight">
+                                <div class="flashlight-body"></div>
+                                <div class="flashlight-lens"></div>
+                                <div class="flashlight-beam"></div>
+                            </div>
+
+                            <div class="axe">
+                                <div class="axe-handle"></div>
+                                <div class="axe-head">
+                                    <div class="axe-blade"></div>
+                                    <div class="axe-pick"></div>
+                                </div>
+                            </div>
+
+                            <!-- Radio -->
+                            <div class="radio-unit">
+                                <div class="radio-body"></div>
+                                <div class="radio-antenna"></div>
+                                <div class="radio-screen"></div>
+                            </div>
+
+                            <!-- Face -->
+                            <div class="avatar-face">
+                                <div class="eyebrows">
+                                    <div class="eyebrow left-eyebrow"></div>
+                                    <div class="eyebrow right-eyebrow"></div>
+                                </div>
+                                <div class="eyes">
+                                    <div class="eye left-eye">
+                                        <div class="pupil"></div>
+                                        <div class="eyelid"></div>
+                                    </div>
+                                    <div class="eye right-eye">
+                                        <div class="pupil"></div>
+                                        <div class="eyelid"></div>
+                                    </div>
+                                </div>
+                                <div class="nose"></div>
+                                <div class="mouth">
+                                    <div class="teeth"></div>
+                                    <div class="tongue"></div>
+                                </div>
+                                <div class="mustache"></div>
+                            </div>
+
+                            <!-- Arms -->
+                            <div class="left-arm">
+                                <div class="arm-sleeve"></div>
+                                <div class="arm-glove"></div>
+                            </div>
+                            <div class="right-arm">
+                                <div class="arm-sleeve"></div>
+                                <div class="arm-glove"></div>
+                            </div>
+
+                            <!-- Environmental Effects -->
+                            <div class="smoke-particles">
+                                <div class="particle smoke-1"></div>
+                                <div class="particle smoke-2"></div>
+                                <div class="particle smoke-3"></div>
+                            </div>
+
+                            <!-- Breathing Indicator -->
+                            <div class="breathing-indicator"></div>
+                        </div>
+                        <div class="speech-bubble">
+                            <p id="speech-text" class="animate__animated animate__fadeIn animate__delay-4s">Welcome to detailed fire safety training! Click on each step to learn everything you need to know. Let's start with step 1.</p>
+                        </div>
+                    </div>
+                    <div class="instruction-content animate__animated animate__slideInRight animate__delay-5s" id="instruction-content">
+                        <div class="content-section active" id="content1">
+                            <h3>Understanding Fire Safety Signs</h3>
+                            <p>Fire safety signs are your visual guides in emergency situations. Learn to recognize them instantly:</p>
+                            <div class="video-demo">
+                                <iframe width="560" height="315" src="https://www.youtube.com/embed/Hnob2OOJCLw" title="Fire Safety Signs Explained" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                <p class="video-caption">Watch this video demonstration of fire safety signs and their meanings.</p>
+                            </div>
+                            <div class="sign-examples">
+                                <div class="sign-card animate__animated animate__fadeInLeft">
+                                    <div class="sign-icon fire-exit">
+                                        <i class="fas fa-running"></i>
+                                    </div>
+                                    <h4>Fire Exit Sign</h4>
+                                    <p>Green sign with white running man. Indicates emergency exit doors. Always check that doors are unlocked.</p>
+                                    <div class="sign-details">
+                                        <strong>Colors:</strong> Green background, white symbol<br>
+                                        <strong>Location:</strong> Above exit doors, in hallways<br>
+                                        <strong>Action:</strong> Use for evacuation
+                                    </div>
+                                </div>
+                                <div class="sign-card animate__animated animate__fadeInLeft animate__delay-1s">
+                                    <div class="sign-icon fire-extinguisher">
+                                        <i class="fas fa-fire-extinguisher"></i>
+                                    </div>
+                                    <h4>Fire Extinguisher</h4>
+                                    <p>Red sign with white extinguisher symbol. Shows location of fire fighting equipment.</p>
+                                    <div class="sign-details">
+                                        <strong>Colors:</strong> Red background, white symbol<br>
+                                        <strong>Location:</strong> Walls, cabinets, near exits<br>
+                                        <strong>Action:</strong> Use only if safe and trained
+                                    </div>
+                                </div>
+                                <div class="sign-card animate__animated animate__fadeInLeft animate__delay-2s">
+                                    <div class="sign-icon no-smoking">
+                                        <i class="fas fa-smoking-ban"></i>
+                                    </div>
+                                    <h4>No Smoking</h4>
+                                    <p>Red circle with diagonal line through cigarette. Prohibits smoking in area.</p>
+                                    <div class="sign-details">
+                                        <strong>Colors:</strong> Red circle, white diagonal line<br>
+                                        <strong>Location:</strong> Near flammable materials, hospitals<br>
+                                        <strong>Action:</strong> Extinguish all smoking materials
+                                    </div>
+                                </div>
+                                <div class="sign-card animate__animated animate__fadeInRight animate__delay-3s">
+                                    <div class="sign-icon alarm">
+                                        <i class="fas fa-bell"></i>
+                                    </div>
+                                    <h4>Fire Alarm</h4>
+                                    <p>Red bell symbol. Indicates fire alarm pull station or call point.</p>
+                                    <div class="sign-details">
+                                        <strong>Colors:</strong> Red background, white bell<br>
+                                        <strong>Location:</strong> Hallways, exits, main areas<br>
+                                        <strong>Action:</strong> Pull to activate alarm system
+                                    </div>
+                                </div>
+                                <div class="sign-card animate__animated animate__fadeInRight animate__delay-4s">
+                                    <div class="sign-icon assembly">
+                                        <i class="fas fa-users"></i>
+                                    </div>
+                                    <h4>Assembly Point</h4>
+                                    <p>Blue sign with white people. Shows where to gather after evacuation.</p>
+                                    <div class="sign-details">
+                                        <strong>Colors:</strong> Blue background, white figures<br>
+                                        <strong>Location:</strong> Outdoor safe areas<br>
+                                        <strong>Action:</strong> Gather here for headcount
+                                    </div>
+                                </div>
+                                <div class="sign-card animate__animated animate__fadeInRight animate__delay-5s">
+                                    <div class="sign-icon first-aid">
+                                        <i class="fas fa-plus"></i>
+                                    </div>
+                                    <h4>First Aid</h4>
+                                    <p>Green cross in white square. Indicates location of first aid equipment.</p>
+                                    <div class="sign-details">
+                                        <strong>Colors:</strong> White background, green cross<br>
+                                        <strong>Location:</strong> Near entrances, offices<br>
+                                        <strong>Action:</strong> Seek medical assistance
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="interactive-sign-quiz">
+                                <h4>Quick Sign Recognition Quiz</h4>
+                                <p>Click on the correct sign for each scenario:</p>
+                                <div class="quiz-scenario">
+                                    <p><strong>Scenario 1:</strong> You need to leave the building quickly</p>
+                                    <div class="sign-options">
+                                        <div class="sign-option" onclick="checkSignAnswer(1, 'exit')">🚪 Exit</div>
+                                        <div class="sign-option" onclick="checkSignAnswer(1, 'extinguisher')">🧯 Extinguisher</div>
+                                        <div class="sign-option" onclick="checkSignAnswer(1, 'alarm')">🔔 Alarm</div>
+                                    </div>
+                                    <div id="scenario1-feedback" class="feedback"></div>
+                                </div>
+                                <div class="quiz-scenario">
+                                    <p><strong>Scenario 2:</strong> You see a small fire and want to fight it</p>
+                                    <div class="sign-options">
+                                        <div class="sign-option" onclick="checkSignAnswer(2, 'extinguisher')">🧯 Extinguisher</div>
+                                        <div class="sign-option" onclick="checkSignAnswer(2, 'exit')">🚪 Exit</div>
+                                        <div class="sign-option" onclick="checkSignAnswer(2, 'firstaid')">➕ First Aid</div>
+                                    </div>
+                                    <div id="scenario2-feedback" class="feedback"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="content-section" id="content2">
+                            <h3>Locating Fire Extinguishers</h3>
+                            <p>Fire extinguishers are your first line of defense against small fires. Remember the PASS method: Pull, Aim, Squeeze, Sweep!</p>
+                            <div class="video-demo">
+                                <iframe width="560" height="315" src="https://www.youtube.com/embed/GVBamXXVD30" title="How to Use Fire Extinguishers" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                <p class="video-caption">Learn the proper technique for using fire extinguishers safely.</p>
+                            </div>
+                            <div class="extinguisher-types">
+                                <div class="extinguisher-card animate__animated animate__zoomIn">
+                                    <div class="extinguisher-type type-a">
+                                        <span>A</span>
+                                    </div>
+                                    <h4>Class A - Ordinary Combustibles</h4>
+                                    <p>For wood, paper, cloth, plastics. Located near offices, libraries, storage areas.</p>
+                                    <div class="usage-guide">
+                                        <strong>Best for:</strong> Trash cans, furniture, books<br>
+                                        <strong>Don't use on:</strong> Electrical or grease fires
+                                    </div>
+                                </div>
+                                <div class="extinguisher-card animate__animated animate__zoomIn animate__delay-1s">
+                                    <div class="extinguisher-type type-b">
+                                        <span>B</span>
+                                    </div>
+                                    <h4>Class B - Flammable Liquids</h4>
+                                    <p>For gasoline, oil, grease, solvents. Found in garages, kitchens, chemical storage.</p>
+                                    <div class="usage-guide">
+                                        <strong>Best for:</strong> Spills, fuel, paint<br>
+                                        <strong>Don't use on:</strong> Electrical fires
+                                    </div>
+                                </div>
+                                <div class="extinguisher-card animate__animated animate__zoomIn animate__delay-2s">
+                                    <div class="extinguisher-type type-c">
+                                        <span>C</span>
+                                    </div>
+                                    <h4>Class C - Electrical Equipment</h4>
+                                    <p>For electrical fires. Located near electrical panels, computers, appliances.</p>
+                                    <div class="usage-guide">
+                                        <strong>Best for:</strong> Wiring, outlets, appliances<br>
+                                        <strong>Safety note:</strong> Unplug first if safe
+                                    </div>
+                                </div>
+                                <div class="extinguisher-card animate__animated animate__zoomIn animate__delay-3s">
+                                    <div class="extinguisher-type type-d">
+                                        <span>D</span>
+                                    </div>
+                                    <h4>Class D - Metal Fires</h4>
+                                    <p>For magnesium, titanium, sodium. Found in industrial settings, labs.</p>
+                                    <div class="usage-guide">
+                                        <strong>Best for:</strong> Metal shavings, powders<br>
+                                        <strong>Special training:</strong> Required for use
+                                    </div>
+                                </div>
+                                <div class="extinguisher-card animate__animated animate__zoomIn animate__delay-4s">
+                                    <div class="extinguisher-type type-k">
+                                        <span>K</span>
+                                    </div>
+                                    <h4>Class K - Kitchen Fires</h4>
+                                    <p>For cooking oils, fats, grease. Located in commercial kitchens, restaurants.</p>
+                                    <div class="usage-guide">
+                                        <strong>Best for:</strong> Deep fryers, ovens<br>
+                                        <strong>Don't use water:</strong> Spreads the fire
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="location-tips">
+                                <h4>How to Locate Extinguishers:</h4>
+                                <ul>
+                                    <li>Check hallways, near exits, and in high-risk areas</li>
+                                    <li>Look for red cylinders mounted on walls or in cabinets</li>
+                                    <li>Read labels to ensure correct type for potential fires</li>
+                                    <li>Check pressure gauge monthly (needle in green zone)</li>
+                                    <li>Ensure pull pin is intact and tamper seal unbroken</li>
+                                    <li>Know the location of at least one extinguisher per floor</li>
+                                </ul>
+                            </div>
+                            <div class="interactive-extinguisher-quiz">
+                                <h4>Extinguisher Type Challenge</h4>
+                                <p>Match the fire type to the correct extinguisher class:</p>
+                                <div class="matching-game">
+                                    <div class="fire-types">
+                                        <div class="fire-type" data-type="electrical">🔌 Electrical fire in an outlet</div>
+                                        <div class="fire-type" data-type="grease">🍳 Grease fire in a kitchen</div>
+                                        <div class="fire-type" data-type="paper">📄 Paper fire in an office</div>
+                                    </div>
+                                    <div class="extinguisher-choices">
+                                        <div class="choice-option" onclick="checkExtinguisherMatch('electrical', 'C')">Class C</div>
+                                        <div class="choice-option" onclick="checkExtinguisherMatch('grease', 'K')">Class K</div>
+                                        <div class="choice-option" onclick="checkExtinguisherMatch('paper', 'A')">Class A</div>
+                                    </div>
+                                    <div id="extinguisher-feedback" class="feedback"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="content-section" id="content3">
+                            <h3>Finding Fire Exits</h3>
+                            <p>Emergency exits are your pathway to safety. Master exit identification and route planning:</p>
+                            <div class="video-demo">
+                                <iframe width="560" height="315" src="https://www.youtube.com/embed/3aLWlDY_G9w" title="Emergency Exit Procedures" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                <p class="video-caption">See how to identify and use emergency exits effectively.</p>
+                            </div>
+                            <div class="exit-types">
+                                <div class="exit-card animate__animated animate__slideInLeft">
+                                    <div class="exit-icon">
+                                        <i class="fas fa-door-open"></i>
+                                    </div>
+                                    <h4>Primary Exit</h4>
+                                    <p>Main entrance/exit doors clearly marked and always unlocked during business hours.</p>
+                                    <div class="exit-details">
+                                        <strong>Features:</strong> Well-lit, wide doors, automatic closers<br>
+                                        <strong>Check:</strong> Not blocked, alarm won't sound when opened normally
+                                    </div>
+                                </div>
+                                <div class="exit-card animate__animated animate__slideInLeft animate__delay-1s">
+                                    <div class="exit-icon">
+                                        <i class="fas fa-external-link-square-alt"></i>
+                                    </div>
+                                    <h4>Emergency Exit</h4>
+                                    <p>Additional doors for emergency use only. May require pushing bar to open.</p>
+                                    <div class="exit-details">
+                                        <strong>Features:</strong> Push bar, alarm activation, delayed closing<br>
+                                        <strong>Check:</strong> Bar moves freely, alarm is operational
+                                    </div>
+                                </div>
+                                <div class="exit-card animate__animated animate__slideInLeft animate__delay-2s">
+                                    <div class="exit-icon">
+                                        <i class="fas fa-route"></i>
+                                    </div>
+                                    <h4>Secondary Routes</h4>
+                                    <p>Alternative paths to exits. Know at least two ways out of every room.</p>
+                                    <div class="exit-details">
+                                        <strong>Features:</strong> Stairwells, service doors, windows<br>
+                                        <strong>Check:</strong> Not locked, clearly marked, accessible
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="exit-procedures">
+                                <h4>Exit Route Planning:</h4>
+                                <ul>
+                                    <li>Count the doors to exits from your current location</li>
+                                    <li>Check that exit doors are not blocked or chained</li>
+                                    <li>Look for exit signs with directional arrows</li>
+                                    <li>Know the location of manual fire alarm pull stations</li>
+                                    <li>Identify assembly points outside the building</li>
+                                    <li>Practice your exit route during non-emergency times</li>
+                                </ul>
+                            </div>
+                            <div class="interactive-exit-planner">
+                                <h4>Virtual Building Exit Planner</h4>
+                                <p>Plan your escape route by selecting your current location:</p>
+                                <div class="building-layout">
+                                    <div class="floor-plan">
+                                        <div class="room office" onclick="selectRoom('office')">Office</div>
+                                        <div class="room conference" onclick="selectRoom('conference')">Conference</div>
+                                        <div class="room hallway" onclick="selectRoom('hallway')">Hallway</div>
+                                        <div class="room kitchen" onclick="selectRoom('kitchen')">Kitchen</div>
+                                        <div class="room restroom" onclick="selectRoom('restroom')">Restroom</div>
+                                        <div class="exit main-exit">Main Exit</div>
+                                        <div class="exit emergency-exit">Emergency Exit</div>
+                                        <div class="exit stairwell">Stairs</div>
+                                    </div>
+                                    <div id="route-display" class="route-display">
+                                        <p>Select a room to see escape routes</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="content-section" id="content4">
+                            <h3>Emergency Procedures</h3>
+                            <p>When fire is discovered, follow these critical steps:</p>
+                            <div class="video-demo">
+                                <iframe width="560" height="315" src="https://www.youtube.com/embed/7gHEtGY4chE" title="Fire Emergency Response" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                <p class="video-caption">Watch emergency procedures in action.</p>
+                            </div>
+                            <div class="procedure-steps">
+                                <div class="procedure-step">
+                                    <div class="step-number-large">1</div>
+                                    <div class="step-text">
+                                        <h4>Alert Others</h4>
+                                        <p>Yell "Fire!" and activate fire alarm if safe to do so.</p>
+                                    </div>
+                                </div>
+                                <div class="procedure-step">
+                                    <div class="step-number-large">2</div>
+                                    <div class="step-text">
+                                        <h4>Assess the Situation</h4>
+                                        <p>If fire is small and contained, attempt to extinguish it.</p>
+                                    </div>
+                                </div>
+                                <div class="procedure-step">
+                                    <div class="step-number-large">3</div>
+                                    <div class="step-text">
+                                        <h4>Evacuate if Necessary</h4>
+                                        <p>Leave immediately if fire is spreading or smoke is present.</p>
+                                    </div>
+                                </div>
+                                <div class="procedure-step">
+                                    <div class="step-number-large">4</div>
+                                    <div class="step-text">
+                                        <h4>Call Emergency Services</h4>
+                                        <p>Dial 911 or local emergency number from safe location.</p>
+                                    </div>
+                                </div>
+                                <div class="procedure-step">
+                                    <div class="step-number-large">5</div>
+                                    <div class="step-text">
+                                        <h4>Go to Assembly Point</h4>
+                                        <p>Proceed to designated safe area and report to authorities.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="content-section" id="content5">
+                            <h3>Prevention and Preparation</h3>
+                            <p>Prevention is the best fire safety. Stay prepared:</p>
+                            <div class="video-demo">
+                                <iframe width="560" height="315" src="https://www.youtube.com/embed/FziRRdrBVK4" title="Fire Prevention Tips" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                <p class="video-caption">Essential prevention strategies for fire safety.</p>
+                            </div>
+                            <div class="prevention-tips">
+                                <div class="prevention-card">
+                                    <i class="fas fa-home"></i>
+                                    <h4>Home Safety</h4>
+                                    <ul>
+                                        <li>Test smoke alarms monthly</li>
+                                        <li>Replace batteries twice yearly</li>
+                                        <li>Keep cooking areas clear</li>
+                                        <li>Store flammable liquids safely</li>
+                                    </ul>
+                                </div>
+                                <div class="prevention-card">
+                                    <i class="fas fa-building"></i>
+                                    <h4>Workplace Safety</h4>
+                                    <ul>
+                                        <li>Know your building's evacuation plan</li>
+                                        <li>Participate in fire drills</li>
+                                        <li>Report faulty equipment</li>
+                                        <li>Keep exits clear</li>
+                                    </ul>
+                                </div>
+                                <div class="prevention-card">
+                                    <i class="fas fa-tree"></i>
+                                    <h4>Outdoor Safety</h4>
+                                    <ul>
+                                        <li>Check weather for fire danger</li>
+                                        <li>Clear brush around campsite</li>
+                                        <li>Never leave campfires unattended</li>
+                                        <li>Have escape routes planned</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="emergency-kit">
+                                <h4>Emergency Kit Essentials:</h4>
+                                <ul>
+                                    <li>Flashlight with extra batteries</li>
+                                    <li>Whistle for signaling</li>
+                                    <li>First aid kit</li>
+                                    <li>Important documents</li>
+                                    <li>Non-perishable food and water</li>
+                                    <li>Emergency blanket</li>
+                                </ul>
+                            </div>
+                            <div class="interactive-tips">
+                                <h3>Interactive Learning Activities</h3>
+                                <div class="tips">
+                                    <div class="tip" onclick="showTipDetail(1)">
+                                        <i class="fas fa-lightbulb"></i>
+                                        <div class="tip-content">
+                                            <h4>Know Your Escape Routes</h4>
+                                            <p>Plan multiple escape routes from your home. Practice them regularly with your family. Never use elevators during a fire.</p>
+                                        </div>
+                                    </div>
+                                    <div class="tip" onclick="showTipDetail(2)">
+                                        <i class="fas fa-clock"></i>
+                                        <div class="tip-content">
+                                            <h4>Test Smoke Alarms Monthly</h4>
+                                            <p>Change batteries twice a year and test alarms monthly. Smoke alarms can alert you to a fire before you see or smell it.</p>
+                                        </div>
+                                    </div>
+                                    <div class="tip" onclick="showTipDetail(3)">
+                                        <i class="fas fa-fire-extinguisher"></i>
+                                        <div class="tip-content">
+                                            <h4>Have a Fire Extinguisher Ready</h4>
+                                            <p>Keep fire extinguishers in key locations. Learn how to use them and check them regularly.</p>
+                                        </div>
+                                    </div>
+                                    <div class="tip" onclick="showTipDetail(4)">
+                                        <i class="fas fa-utensils"></i>
+                                        <div class="tip-content">
+                                            <h4>Never Leave Cooking Unattended</h4>
+                                            <p>Stay in the kitchen when cooking. Keep flammable items away from heat sources.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Expert Tips Pop-ups -->
+                                <div class="expert-tips-section">
+                                    <h4>💡 Expert Firefighter Tips</h4>
+                                    <div class="expert-tip-popup" id="expertTip1">
+                                        <div class="expert-tip-content">
+                                            <div class="expert-avatar">
+                                                <i class="fas fa-user-shield"></i>
+                                                <span>Fire Chief Johnson</span>
+                                            </div>
+                                            <p>"I've seen too many preventable fires. The key is preparation - know your exits, have working smoke alarms, and practice your escape plan regularly."</p>
+                                            <button class="close-expert-tip" onclick="closeExpertTip(1)">×</button>
+                                        </div>
+                                    </div>
+                                    <div class="expert-tip-popup" id="expertTip2">
+                                        <div class="expert-tip-content">
+                                            <div class="expert-avatar">
+                                                <i class="fas fa-user-shield"></i>
+                                                <span>Lt. Sarah Martinez</span>
+                                            </div>
+                                            <p>"Children and pets often hide during fires. Always check closets and under beds during evacuation. Time is critical - you may have only 2 minutes to escape."</p>
+                                            <button class="close-expert-tip" onclick="closeExpertTip(2)">×</button>
+                                        </div>
+                                    </div>
+                                    <div class="expert-tip-popup" id="expertTip3">
+                                        <div class="expert-tip-content">
+                                            <div class="expert-avatar">
+                                                <i class="fas fa-user-shield"></i>
+                                                <span>Capt. Mike Rodriguez</span>
+                                            </div>
+                                            <p>"Most fire deaths occur from smoke inhalation, not burns. Stay low to the ground where air is cleaner, and cover your mouth with a wet cloth if possible."</p>
+                                            <button class="close-expert-tip" onclick="closeExpertTip(3)">×</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tip Modal -->
+                            <div id="tipModal" class="modal">
+                                <div class="modal-content">
+                                    <span class="close" onclick="closeModal()">&times;</span>
+                                    <h2 id="tipTitle">Tip Title</h2>
+                                    <p id="tipContent">Tip content will appear here.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="progress-tracker animate__animated animate__fadeInUp animate__delay-6s">
+                    <div class="progress-step completed">
+                        <i class="fas fa-check"></i>
+                        <span>Introduction</span>
+                    </div>
+                    <div class="progress-step active">
+                        <i class="fas fa-play"></i>
+                        <span>Instructions</span>
+                    </div>
+                    <div class="progress-step">
+                        <i class="fas fa-question"></i>
+                        <span>Quiz</span>
+                    </div>
+                    <div class="progress-step">
+                        <i class="fas fa-certificate"></i>
+                        <span>Certificate</span>
+                    </div>
+                </div>
+                <button class="btn btn-secondary animate__animated animate__bounceIn animate__delay-7s" onclick="nextSection('quiz')">
+                    <i class="fas fa-brain"></i> Take Advanced Quiz
+                </button>
+            </div>
+            <div class="parallax-bg"></div>
+        </section>
+
+        <!-- Quiz Section -->
+        <section id="quiz" class="section" role="main" aria-labelledby="quiz-heading">
+            <div class="content">
+                <div class="quiz-header">
+                    <h2 id="quiz-heading" class="animate__animated animate__fadeIn">Advanced Interactive Quiz</h2>
+                    <p class="animate__animated animate__fadeIn animate__delay-1s">Test your fire safety knowledge with multimedia scenarios and interactive challenges!</p>
+                </div>
+
+                <div class="quiz-progress animate__animated animate__fadeInUp animate__delay-2s" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="5" aria-label="Quiz progress">
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar-fill"></div>
+                        </div>
+                    </div>
+                    <div class="progress-text">Question 1 of 5</div>
+                </div>
+
+                <div class="quiz-timer animate__animated animate__fadeInUp animate__delay-3s" role="timer" aria-live="polite" aria-atomic="true">
+                    <i class="fas fa-clock" aria-hidden="true"></i>
+                    <span id="timer">10:00</span>
+                </div>
+
+                <div class="quiz-intro animate__animated animate__fadeInUp animate__delay-4s">
+                    <div class="quiz-start-card">
+                        <h3>Ready to Test Your Knowledge?</h3>
+                        <p>Answer 5 interactive questions covering fire safety scenarios, equipment identification, and emergency procedures.</p>
+                        <div class="quiz-features">
+                            <div class="feature">
+                                <i class="fas fa-clock" aria-hidden="true"></i>
+                                <span>10 Minutes</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-brain" aria-hidden="true"></i>
+                                <span>5 Questions</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-trophy" aria-hidden="true"></i>
+                                <span>70% to Pass</span>
+                            </div>
+                        </div>
+                        <button class="quiz-button start-quiz-btn" onclick="startQuiz()" aria-describedby="start-quiz-desc">
+                            <i class="fas fa-play" aria-hidden="true"></i> Start Advanced Quiz
+                        </button>
+                        <div id="start-quiz-desc" class="sr-only">Begin the 5-question interactive quiz with 10-minute time limit</div>
+                    </div>
+                </div>
+
+                <div class="quiz-container animate__animated animate__fadeInUp animate__delay-4s" style="display: none;" role="region" aria-label="Quiz questions" aria-live="polite">
+                    <!-- Questions will be dynamically generated here -->
+                </div>
+
+                <div class="quiz-actions animate__animated animate__fadeInUp animate__delay-5s" style="display: none;">
+                    <button class="quiz-button secondary" onclick="startQuiz()" aria-describedby="restart-desc">
+                        <i class="fas fa-redo" aria-hidden="true"></i> Restart Quiz
+                    </button>
+                    <div id="restart-desc" class="sr-only">Restart the quiz from the beginning</div>
+                    <button class="quiz-button" onclick="nextSection('certificate')" id="skipBtn" aria-describedby="skip-desc">
+                        <i class="fas fa-forward" aria-hidden="true"></i> Skip to Certificate
+                    </button>
+                    <div id="skip-desc" class="sr-only">Skip quiz and proceed to certificate section</div>
+                </div>
+            </div>
+            <div class="parallax-bg" aria-hidden="true"></div>
+        </section>
+
+        <!-- Certificate Section -->
+        <section id="certificate" class="section" role="main" aria-labelledby="certificate-heading">
+            <div class="content">
+                <h2 id="certificate-heading" class="animate__animated animate__fadeInDown">🎉 Congratulations! 🎉</h2>
+                <div class="name-input-container animate__animated animate__fadeInUp">
+                    <label for="userNameInput">Enter your name for the certificate:</label>
+                    <input type="text" id="userNameInput" placeholder="Your Name" maxlength="50" aria-describedby="name-desc">
+                    <div id="name-desc" class="sr-only">Enter your full name to personalize your certificate</div>
+                    <button class="btn btn-primary" onclick="generateCertificate()" aria-describedby="generate-desc">
+                        <i class="fas fa-certificate" aria-hidden="true"></i> Generate Certificate
+                    </button>
+                    <div id="generate-desc" class="sr-only">Generate your personalized fire safety certificate</div>
+                </div>
+                <div id="cert" class="certificate animate__animated animate__zoomIn" role="region" aria-label="Fire safety certificate" style="display: none;">
+                    <div class="cert-header">
+                        <i class="fas fa-certificate" aria-hidden="true"></i>
+                        <h3>Advanced Fire Safety Certificate</h3>
+                    </div>
+                    <p>This certifies that you have successfully completed the advanced fire safety training course.</p>
+                    <div class="cert-details">
+                        <p><strong>Name:</strong> <span id="userName"></span></p>
+                        <p><strong>Date:</strong> <span id="date"></span></p>
+                        <p><strong>Score:</strong> <span id="score"></span></p>
+                    </div>
+                    <div class="signature">
+                        <p>Authorized by Fire Safety Institute</p>
+                    </div>
+                </div>
+                <button class="btn btn-success animate__animated animate__bounceIn" onclick="downloadCertificate()" id="downloadBtn" style="display: none;" aria-describedby="download-desc">
+                    <i class="fas fa-download" aria-hidden="true"></i> Download Certificate
+                </button>
+                <div id="download-desc" class="sr-only">Download your fire safety certificate as a PDF file</div>
+                <div id="confetti" class="confetti" aria-hidden="true"></div>
+            </div>
+            <div class="parallax-bg" aria-hidden="true"></div>
+        </section>
+    </div>
+    </main>
+
+    <div id="tipModal" class="modal" role="dialog" aria-labelledby="tipTitle" aria-modal="true" aria-hidden="true">
+        <div class="modal-content">
+            <button class="close" onclick="closeModal()" aria-label="Close modal">&times;</button>
+            <h3 id="tipTitle"></h3>
+            <p id="tipContent"></p>
+        </div>
+    </div>
+
+    <div id="expertPopup" class="expert-popup">
+        <div class="expert-content">
+            <div class="expert-avatar">
+                <i class="fas fa-user-shield"></i>
+            </div>
+            <h4>Expert Advice</h4>
+            <p id="expertText"></p>
+            <button class="close-expert" onclick="closeExpertTip()">Got it!</button>
+        </div>
+    </div>
+
+    <div id="scenarioModal" class="modal">
+        <div class="modal-content scenario-content">
+            <span class="close" onclick="closeScenarioModal()">&times;</span>
+            <h3 id="scenarioTitle">Interactive Fire Scenario</h3>
+            <p id="scenarioDescription"></p>
+            <div id="scenarioChoices"></div>
+            <div id="scenarioOutcome" style="display: none;">
+                <h4>Outcome:</h4>
+                <p id="outcomeText"></p>
+                <button onclick="restartScenario()">Try Another Scenario</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
